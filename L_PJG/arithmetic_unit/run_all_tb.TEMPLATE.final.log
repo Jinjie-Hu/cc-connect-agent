@@ -1,0 +1,394 @@
+================================================================================
+ run_all_tb.TEMPLATE.final.log - L_PJG arithmetic_unit 16-TB VCS regression
+ Generated: Wed Aug 12 22:54:46 CST 2026
+ Machine  : DESKTOP-R2D4SNR
+ License  : lmgrd/snpslmd on port 27000 (active)
+================================================================================
+
+### run_all_tb.sh summary (16 TBs)
+==================== real_multiplier ====================
+[PASS] real_multiplier
+==================== real_adder ====================
+[PASS] real_adder
+==================== real_addsub ====================
+[PASS] real_addsub
+==================== real_negative ====================
+[PASS] real_negative
+==================== real_adder_tree ====================
+[PASS] real_adder_tree
+==================== real_mac ====================
+[PASS] real_mac
+==================== real_mac_w_bias ====================
+[PASS] real_mac_w_bias
+==================== complex_multiplier ====================
+[PASS] complex_multiplier
+==================== complex_adder ====================
+[PASS] complex_adder
+==================== complex_addsub ====================
+[PASS] complex_addsub
+==================== complex_conj ====================
+[PASS] complex_conj
+==================== complex_negative ====================
+[PASS] complex_negative
+==================== complex_adder_tree ====================
+[PASS] complex_adder_tree
+==================== complex_real_multiplier ====================
+[PASS] complex_real_multiplier
+==================== complex_mac ====================
+[PASS] complex_mac
+==================== complex_mac_w_bias ====================
+[PASS] complex_mac_w_bias
+============================================================
+TOTAL PASS=16 FAIL=0
+FAIL_LIST:
+
+### Per-TB detail (compile tail + sim tail)
+==================== real_multiplier ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+  InputA  = 0x7fff
+[INFO] Loading InputB ...
+
+Warning: Too many digits in hexadecimal number '8000', truncating to target size 10 bits
+  at time 0 in file /home/jinjiehu/projects/Template/vcs/tb/real_multiplier_tb.sv line 37
+
+  InputB  = 0x0
+[INFO] DUT   out = 0x0 (21 bits)
+[INFO] Expected = 0x0
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== real_adder ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+  InputA  = 0x7fff
+[INFO] Loading InputB ...
+
+Warning: Too many digits in hexadecimal number '8000', truncating to target size 10 bits
+  at time 0 in file /home/jinjiehu/projects/Template/vcs/tb/real_adder_tb.sv line 39
+
+  InputB  = 0x0
+[INFO] DUT   out = 0x7fff0 (21 bits)
+[INFO] Expected = 0x7fff0
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== real_addsub ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+
+Warning: Too many digits in hexadecimal number '8000', truncating to target size 10 bits
+  at time 0 in file /home/jinjiehu/projects/Template/vcs/tb/real_addsub_tb.sv line 39
+
+  InputB  = 0x0
+[INFO] Loading sub ...
+  sub     = 1
+[INFO] DUT   out = 0x7fff0 (21 bits)
+[INFO] Expected = 0x7fff0
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== real_negative ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+Command: ./vcs_tb_real_negative -l sim.log +fsdb+autoflush +fsdb+compress +fsdb+mda+region=0.5GB
+Chronologic VCS simulator copyright 1991-2016
+Contains Synopsys proprietary information.
+Compiler version L-2016.06_Full64; Runtime version L-2016.06_Full64;  Aug 12 22:53 2026
+[INFO] Loading InputA ...
+  InputA  = 0x7fff
+[INFO] DUT   out = 0x8001 (16 bits)
+[INFO] Expected = 0x8001
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== real_adder_tree ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+Chronologic VCS simulator copyright 1991-2016
+Contains Synopsys proprietary information.
+Compiler version L-2016.06_Full64; Runtime version L-2016.06_Full64;  Aug 12 22:53 2026
+  Input[0] = 0x7fff
+  Input[1] = 0x8000
+  Input[2] = 0x3fff
+  Input[3] = 0x4000
+[INFO] DUT   out = 0x17ffe0 (21 bits)
+[INFO] Expected = 0x17ffe0
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== real_mac ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+
+  InputB[2] = 0x20
+
+Warning: Too many digits in hexadecimal number '0040', truncating to target size 10 bits
+  at time 0 in file /home/jinjiehu/projects/Template/vcs/tb/real_mac_tb.sv line 42
+
+  InputB[3] = 0x40
+[INFO] DUT   out = 0x1ac9eb (21 bits)
+[INFO] Expected = 0x1ac9eb
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== real_mac_w_bias ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+
+Warning: Too many digits in hexadecimal number '0040', truncating to target size 10 bits
+  at time 0 in file /home/jinjiehu/projects/Template/vcs/tb/real_mac_w_bias_tb.sv line 46
+
+  InputB[3] = 0x40
+[INFO] Loading InputC ...
+  InputC  = 0x100
+[INFO] DUT   out = 0x1ad1eb (21 bits)
+[INFO] Expected = 0x1ad1eb
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== complex_multiplier ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+  InputA  = 0x7fff8000
+[INFO] Loading InputB ...
+
+Warning: Too many digits in hexadecimal number '80007fff', truncating to target size 20 bits
+  at time 0 in file /home/jinjiehu/projects/Template/vcs/tb/complex_multiplier_tb.sv line 39
+
+  InputB  = 0x7fff
+[INFO] DUT   out = 0xeffe380001 (42 bits)
+[INFO] Expected = 0xeffe380001
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== complex_adder ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+  InputA  = 0x7fff8000
+[INFO] Loading InputB ...
+
+Warning: Too many digits in hexadecimal number '80007fff', truncating to target size 20 bits
+  at time 0 in file /home/jinjiehu/projects/Template/vcs/tb/complex_adder_tb.sv line 39
+
+  InputB  = 0x7fff
+[INFO] DUT   out = 0x1007a17ffe0 (42 bits)
+[INFO] Expected = 0x1007a17ffe0
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== complex_addsub ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+
+Warning: Too many digits in hexadecimal number '80007fff', truncating to target size 20 bits
+  at time 0 in file /home/jinjiehu/projects/Template/vcs/tb/complex_addsub_tb.sv line 39
+
+  InputB  = 0x7fff
+[INFO] Loading sub ...
+  sub     = 1
+[INFO] DUT   out = 0xff82180020 (42 bits)
+[INFO] Expected = 0xff82180020
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== complex_conj ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+Command: ./vcs_tb_complex_conj -l sim.log +fsdb+autoflush +fsdb+compress +fsdb+mda+region=0.5GB
+Chronologic VCS simulator copyright 1991-2016
+Contains Synopsys proprietary information.
+Compiler version L-2016.06_Full64; Runtime version L-2016.06_Full64;  Aug 12 22:53 2026
+[INFO] Loading InputA ...
+  InputA  = 0x7fff8000
+[INFO] DUT   out = 0x7fff8000 (32 bits)
+[INFO] Expected = 0x7fff8000
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== complex_negative ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+Command: ./vcs_tb_complex_negative -l sim.log +fsdb+autoflush +fsdb+compress +fsdb+mda+region=0.5GB
+Chronologic VCS simulator copyright 1991-2016
+Contains Synopsys proprietary information.
+Compiler version L-2016.06_Full64; Runtime version L-2016.06_Full64;  Aug 12 22:53 2026
+[INFO] Loading InputA ...
+  InputA  = 0x7fff8000
+[INFO] DUT   out = 0x80018000 (32 bits)
+[INFO] Expected = 0x80018000
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== complex_adder_tree ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+Chronologic VCS simulator copyright 1991-2016
+Contains Synopsys proprietary information.
+Compiler version L-2016.06_Full64; Runtime version L-2016.06_Full64;  Aug 12 22:53 2026
+  Input[0] = 0x7fff8000
+  Input[1] = 0x80007fff
+  Input[2] = 0x3fff0000
+  Input[3] = 0x3fff
+[INFO] DUT   out = 0x27ffc13ffe0 (42 bits)
+[INFO] Expected = 0x27ffc13ffe0
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== complex_real_multiplier ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+  complex_in = 0x7fff8000
+[INFO] Loading real_in ...
+
+Warning: Too many digits in hexadecimal number '80007fff', truncating to target size 10 bits
+  at time 0 in file /home/jinjiehu/projects/Template/vcs/tb/complex_real_multiplier_tb.sv line 37
+
+  real_in    = 0x3ff
+[INFO] DUT   out = 0x3f800004000 (42 bits)
+[INFO] Expected = 0x3f800004000
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== complex_mac ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+  InputA[2] = 0xe0a3bbf3
+  InputA[3] = 0x4db5f049
+[INFO] Loading InputB ...
+  InputB[0] = 0x280a
+  InputB[1] = 0x4008
+  InputB[2] = 0x2806
+  InputB[3] = 0x8010
+[INFO] DUT output = 0xaaab439444 (42 bits)
+[INFO] Expected   = 0xaaab439444
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+
+==================== complex_mac_w_bias ====================
+-- compile (make.log tail 4) --
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+-- sim (sim.log tail 14) --
+[INFO] Loading InputB ...
+  InputB[0] = 0x4002
+  InputB[1] = 0x4006
+  InputB[2] = 0x800a
+  InputB[3] = 0x800e
+[INFO] Loading InputC ...
+  InputC  = 0x400080
+[INFO] DUT   out = 0x33601c166eb (42 bits)
+[INFO] Expected = 0x33601c166eb
+[PASS] Output matches.
+
+===== TEST PASSED =====
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 5 ns
+

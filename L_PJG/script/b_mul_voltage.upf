@@ -1,0 +1,75 @@
+# =========================================================================
+# Golden UPF Script for Multi-Voltage SoC (文件名: top.upf)
+# =========================================================================
+
+# -------------------------------------------------------------------------
+# 1. 划分电源域与绑定底层逻辑 (Create Power Domains)
+# -------------------------------------------------------------------------
+# 创建顶层默认电源域（涵盖所有未明确分配的逻辑）
+create_power_domain PD_TOP 
+
+# 为子模块 CPU 实例创建独立电源域
+create_power_domain PD_CPU -elements {u_cpu} 
+
+# 为子模块 DSP 实例创建独立电源域（此域设计为可关断）
+create_power_domain PD_DSP -elements {u_dsp} 
+
+# -------------------------------------------------------------------------
+# 2. 构建全局与独立的供电网络 (Create Supply Ports & Nets)
+# -------------------------------------------------------------------------
+# 在顶层打下供电端口 (PAD / Ports)
+create_supply_port VDD 
+create_supply_port VDD_CPU 
+create_supply_port VDD_DSP 
+create_supply_port VSS 
+
+# 创建物理走线网络 (Supply Nets)
+create_supply_net VDD     -domain PD_TOP 
+create_supply_net VDD_CPU -domain PD_TOP 
+create_supply_net VDD_DSP -domain PD_TOP 
+create_supply_net VSS     -domain PD_TOP 
+
+# 将顶层供电端口与物理走线网络连接起来
+connect_supply_net VDD     -ports {VDD} 
+connect_supply_net VDD_CPU -ports {VDD_CPU} 
+connect_supply_net VDD_DSP -ports {VDD_DSP} 
+connect_supply_net VSS     -ports {VSS} 
+
+# -------------------------------------------------------------------------
+# 3. 指定各电源域的主供电网络 (Specify Primary Supply Nets)
+# -------------------------------------------------------------------------
+set_domain_supply_net PD_TOP -primary_power_net VDD     -primary_ground_net VSS 
+set_domain_supply_net PD_CPU -primary_power_net VDD_CPU -primary_ground_net VSS 
+set_domain_supply_net PD_DSP -primary_power_net VDD_DSP -primary_ground_net VSS 
+
+# -------------------------------------------------------------------------
+# 4. 定义端口状态与电源状态表 (Power State Table, PST)
+# -------------------------------------------------------------------------
+# 定义各个电源端口可能存在的物理状态（电压值或断电 OFF）
+add_port_state VDD     -state {V_1P2 1.2} 
+add_port_state VDD_CPU -state {V_1P0 1.0} 
+add_port_state VDD_DSP -state {V_0P8 0.8} -state {V_OFF off} 
+add_port_state VSS     -state {GND 0.0} 
+
+# 注册参与状态组合的电源网络
+create_pst top_pst -supplies {VDD VDD_CPU VDD_DSP VSS} 
+
+# 定义系统中所有合法的全局工作模式 (Operational Modes)
+add_pst_state ALL_ON    -pst top_pst -state {V_1P2 V_1P0 V_0P8 GND} 
+add_pst_state DSP_SLEEP -pst top_pst -state {V_1P2 V_1P0 V_OFF GND} 
+
+# -------------------------------------------------------------------------
+# 5. 定义跨域物理隔离与转换策略 (Policies)
+# -------------------------------------------------------------------------
+# 隔离策略 (Isolation): 针对可关断域 PD_DSP 的输出进行钳位
+set_isolation iso_dsp_out -domain PD_DSP \
+    -isolation_power_net VDD -isolation_ground_net VSS \
+    -clamp_value 0 -applies_to outputs 
+
+# 电平转换策略 (Level Shifter): 针对 PD_CPU (1.0V) 到 PD_TOP (1.2V) 的跨域信号
+set_level_shifter ls_cpu_to_top -domain PD_CPU \
+    -applies_to outputs -rule low_to_high -location parent 
+
+# =========================================================================
+# 脚本结束
+# =========================================================================

@@ -1,0 +1,81 @@
+                         Chronologic VCS (TM)
+         Version L-2016.06_Full64 -- Fri Aug  7 12:51:29 2026
+               Copyright (c) 1991-2016 by Synopsys Inc.
+                         ALL RIGHTS RESERVED
+
+This program is proprietary and confidential information of Synopsys Inc.
+and may be used and disclosed only as authorized in a license agreement
+controlling such use and disclosure.
+
+
+Error-[BC_MSGID] Could not load error message table
+Unknown source file, unknown line number
+  Error BC_MSGID has occurred, but the error message table could not be loaded
+  so the message body cannot be printed. 
+  You may be able to retrieve the full message using this command:
+      $VCS_HOME/bin/vcsMsgReport BC_MSGID
+  
+  The error message report included the following additional information: 
+  ISVSIVI downgraded to warning 
+
+
+An unexpected termination has occurred in /mnt/wsl/eda/Synopsys/Vcs2016/linux64/bin/vcs1 due to an internal error in the tool
+Hostname DESKTOP-R2D4SNR
+
+During Error message function Code:="BC_MSGID" 
+During setup for compilation 
+
+Command line: /mnt/wsl/eda/Synopsys/Vcs2016/linux64/bin/vcs1 -sverilog +v2k -timescale=1ns/1ns +notimingcheck -full64 -j16 -ignore all -l compile.log -top real_multiplier_tb -o simv ../../real_multiplier_tb.sv ../../../qtz_def.svh ../../../real_multiplier.sv
+
+--- Stack trace follows:
+Completed context dump phase data
+
+Error-[CHR_OPT] Could not load error message table
+Unknown source file, unknown line number
+  Error CHR_OPT has occurred, but the error message table could not be loaded 
+  so the message body cannot be printed. 
+  You may be able to retrieve the full message using this command:
+      $VCS_HOME/bin/vcsMsgReport CHR_OPT
+  
+  The error message report included the following additional information: i 
+  -ignore 
+
+
+During Error message function Code:="CHR_OPT" 
+During Argument processing Argument="-ignore" 
+During setup for compilation 
+
+Command line: /mnt/wsl/eda/Synopsys/Vcs2016/linux64/bin/vcs1 -sverilog +v2k -timescale=1ns/1ns +notimingcheck -full64 -j16 -ignore all -l compile.log -top real_multiplier_tb -o simv ../../real_multiplier_tb.sv ../../../qtz_def.svh ../../../real_multiplier.sv
+
+--- Stack trace follows:
+Completed context dump phase data
+
+During parsing for two step flow 
+
+Command line: /mnt/wsl/eda/Synopsys/Vcs2016/linux64/bin/vcs1 -sverilog +v2k -timescale=1ns/1ns +notimingcheck -full64 -j16 -ignore all -l compile.log -top real_multiplier_tb -o simv ../../real_multiplier_tb.sv ../../../qtz_def.svh ../../../real_multiplier.sv
+
+--- Stack trace follows:
+Completed context dump phase
+                         Chronologic VCS (TM)
+         Version L-2016.06_Full64 -- Fri Aug  7 12:52:26 2026
+               Copyright (c) 1991-2016 by Synopsys Inc.
+                         ALL RIGHTS RESERVED
+
+This program is proprietary and confidential information of Synopsys Inc.
+and may be used and disclosed only as authorized in a license agreement
+controlling such use and disclosure.
+
+
+Warning-[CHR_OPT] Characters in the option ignored
+  Characters after '-i' are ignored (-ignore).
+
+
+An unexpected termination has occurred in /mnt/wsl/eda/Synopsys/Vcs2016/linux64/bin/vcs1 due to a signal: Segmentation fault
+Hostname DESKTOP-R2D4SNR
+
+During parsing for two step flow 
+
+Command line: /mnt/wsl/eda/Synopsys/Vcs2016/linux64/bin/vcs1 -sverilog +v2k -timescale=1ns/1ns +notimingcheck -full64 -j16 -ignore all -l compile.log -top real_multiplier_tb -o simv ../../real_multiplier_tb.sv ../../../qtz_def.svh ../../../real_multiplier.sv
+
+--- Stack trace follows:
+Completed context dump phase

@@ -1,0 +1,31 @@
+`include "qtz_def.svh"
+
+localparam qtz_t DEFAULT_QTZ = get_qtz(1, 5, 10, REAL);
+
+module real_addsub #(
+	parameter qtz_t INPUT_A_QTZ = DEFAULT_QTZ,
+	parameter qtz_t INPUT_B_QTZ = DEFAULT_QTZ,
+	parameter qtz_t OUTPUT_QTZ  = DEFAULT_QTZ
+) (
+	input   [INPUT_A_QTZ.width-1:0]  InputA,
+	input   [INPUT_B_QTZ.width-1:0]  InputB,
+	input   					     sub,
+	output  [ OUTPUT_QTZ.width-1:0]  OutputC
+);
+	localparam qtz_t IN_ALIGN_QTZ = get_qtz(INPUT_A_QTZ.sgn_w & INPUT_B_QTZ.sgn_w, `MAX(INPUT_A_QTZ.int_w, INPUT_B_QTZ.int_w), `MAX(INPUT_A_QTZ.fp_w, INPUT_B_QTZ.fp_w), REAL);
+	localparam qtz_t OUT_FULL_QTZ = get_qtz(IN_ALIGN_QTZ.sgn_w, IN_ALIGN_QTZ.int_w + 1, IN_ALIGN_QTZ.fp_w, REAL);
+	
+	wire [IN_ALIGN_QTZ.width-1:0] InputA_align;
+	wire [IN_ALIGN_QTZ.width-1:0] InputB_align;
+	wire [OUT_FULL_QTZ.width-1:0] OutputC_full;
+
+	// input align
+	assign InputA_align = `REAL_VALUE_TRANSFER(InputA, INPUT_A_QTZ, IN_ALIGN_QTZ);
+	assign InputB_align = `REAL_VALUE_TRANSFER(InputB, INPUT_B_QTZ, IN_ALIGN_QTZ);
+	// adder do not care about the unsigned or signed
+	assign OutputC_full = sub ? 
+						  InputA_align - InputB_align:
+						  InputA_align + InputB_align;
+	// output assign
+	assign OutputC = `REAL_VALUE_TRANSFER(OutputC_full, OUT_FULL_QTZ, OUTPUT_QTZ);
+endmodule

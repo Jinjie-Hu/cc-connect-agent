@@ -1,0 +1,57 @@
+#/* The name of the clock pin. If no clock-pin     */
+#/* exists, pick anything                          */
+
+puts "----------------------------------- Input timing constraints"
+
+set my_clock_pin clk
+
+#/* Delay of input signals (Clock-to-Q, Package etc.)  */
+set my_input_delay_ns 0.0
+#set my_input_delay_ns  [expr "0.7*$my_period"]
+
+#/* Reserved time for output signals (Holdtime etc.)   */
+set my_output_delay_ns 0
+#set my_output_delay_ns [expr "0.7*$my_period"]
+
+#timing constraints
+set my_clk_freq_MHz 800
+set my_period [expr "1000.0/$my_clk_freq_MHz"]
+#set my_period 24
+set find_clock [ find port [list $my_clock_pin] ]
+if {  $find_clock != [list] } {
+   set clk_name $my_clock_pin
+   create_clock -period $my_period $clk_name
+} else {
+   set clk_name vclk
+   create_clock -period $my_period -name $clk_name
+   set my_clock_pin vclk
+}
+
+set CLOCK [get_clocks $my_clock_pin]
+# clock uncertainty = skew(can be gotten by post-layout) + jitter + margin
+set_clock_uncertainty -setup [expr "0.25*$my_period"] $CLOCK
+set_clock_uncertainty -hold 0.06 $CLOCK
+# clk source latency 
+set_clock_latency -source -max 0 $CLOCK
+# clk net latency. In post-layout, this will be ignored.
+set_clock_latency -max 0 $CLOCK
+#set_clock_transition -max 0.08 $CLOCK
+
+# used in Post-CTS
+#set_propagated_clock [get_clocks $my_clock_pin]
+
+#set_driving_cell  -lib_cell INVX1  [all_inputs]
+set_input_delay $my_input_delay_ns -clock $clk_name [remove_from_collection [all_inputs] $my_clock_pin]
+set_output_delay $my_output_delay_ns -clock $clk_name [all_outputs]
+
+# ----------- on-chip variation --------
+#set_timing_derate -cell_delay -late -data 1.084
+#set_timing_derate -net_delay -late -data 1.073
+
+# ----------- tighten timing --------
+set_timing_derate -cell_delay -late -data 1.4
+set_timing_derate -net_delay -late -data 1.4
+
+#set_driving_cell -pin Z -lib_cell CLKBUF [all_inputs] -no_design_rule
+
+check_timing > ${log_dir}/${my_toplevel}.pre_chk_timing

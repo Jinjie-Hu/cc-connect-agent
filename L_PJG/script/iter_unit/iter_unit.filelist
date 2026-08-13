@@ -1,0 +1,13 @@
++incdir+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/vinc
+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/general/dfflr.sv
+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_conj.sv
+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/real_adder.sv
+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_negative.sv
+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/real_addsub.sv
+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/real_negative.sv
+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_real_multiplier.sv
+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/real_multiplier.sv
+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_adder.sv
+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_multiplier.sv
+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_addsub.sv
+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/iter_unit/LPJG_unit.sv
