@@ -8,8 +8,12 @@
 #      供 fused G_PE / G_PE_diag / MF_PE 例化）与 complex_multiplier.sv；
 #   3) G_PE.sv / G_PE_diag.sv / MF_PE.sv 为 fused 工作树版本（同一文件路径，
 #      内容随本仓库提交同步到 EDA）。
-# 其余算术单元（complex_adder / complex_real_multiplier / real_multiplier /
-# real_adder / real_addsub / complex_conj / reciprocal_lut.v 等）保持 compact。
+#   4) 其余算术单元（complex_adder / complex_addsub / complex_real_multiplier /
+#      real_multiplier / real_adder / real_addsub / complex_conj /
+#      complex_negative / real_negative / reciprocal_lut.v）也从
+#      arithmetic_unit_full 解析 —— 两库逐字节相同（本地行级 diff + EDA md5 双验证），
+#      文件级零语义改动、bit-safe；整机 fused FC 复验 0/32
+#      （vcs_top_fc_16_optb_full，2026-09-06，golden 29cdbe71）。
 # 路径为 EDA 绝对路径，与 script/rtl.filelist 及 sim_rtl_fc.f 同约定。
 # 使用（跑综合时，当前阶段不跑）：
 #   export SNPSLMD_LICENSE_FILE=27000@icaislab
@@ -18,16 +22,16 @@
 +incdir+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/vinc
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/general/one_hot_code.sv
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/general/dfflr.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/reciprocal_lut.v
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_conj.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/real_adder.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_negative.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/real_addsub.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/real_negative.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_real_multiplier.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/real_multiplier.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_adder.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_addsub.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/reciprocal_lut.v
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_conj.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/real_adder.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_negative.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/real_addsub.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/real_negative.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_real_multiplier.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/real_multiplier.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_adder.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_addsub.sv
 // fused full-precision arithmetic units (arithmetic_unit_full)
 /home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_mac.sv
 /home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_multiplier.sv

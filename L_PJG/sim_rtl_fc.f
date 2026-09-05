@@ -8,19 +8,26 @@
 +incdir+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/vinc
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/general/one_hot_code.sv
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/general/dfflr.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/reciprocal_lut.v
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_conj.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/real_adder.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_negative.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/real_addsub.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/real_negative.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_real_multiplier.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/real_multiplier.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_adder.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_addsub.sv
-// fused full-precision arithmetic modules (arithmetic_unit_full), replace
-// per-stage truncation in G_PE/G_PE_diag/MF_PE accumulators and the
-// complex_multiplier cell used by LPJG_unit
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/reciprocal_lut.v
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_conj.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/real_adder.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_negative.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/real_addsub.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/real_negative.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_real_multiplier.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/real_multiplier.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_adder.sv
+/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_addsub.sv
+// ALL arithmetic units now uniformly resolve to arithmetic_unit_full:
+//  - complex_mac.sv (defines complex_mac_w_bias) + complex_multiplier.sv =
+//    the only full-vs-compact content differences (fused MAC for
+//    G_PE/G_PE_diag/MF_PE; single-truncation complex_multiplier for LPJG_unit);
+//  - the other units (complex_adder / complex_addsub / complex_conj /
+//    complex_real_multiplier / real_multiplier / real_adder / real_addsub /
+//    complex_negative / real_negative / reciprocal_lut.v) are BYTE-IDENTICAL
+//    between rtl/arithmetic_unit (compact) and arithmetic_unit_full, so the
+//    AFTER build references them from the full library for consistency (bit-
+//    safe: same cell bodies, verified by whole-design FC 0/32).
 /home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_mac.sv
 /home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_multiplier.sv
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/iter_unit/LPJG_unit.sv

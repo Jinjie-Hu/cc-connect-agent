@@ -160,6 +160,7 @@ DC low-effort 功耗估算，输入无翻转率标注（PWR-414/415），**只�
 
 > 「成阵相关」= G_systolic_array（G 更新/匹配滤波阵列）与 iter_unit（LPJG 迭代单元）中直接例化算术库的模块。
 > 已在本次 G_PE 例子中实际综合验证的部分标 ✅，未综合但结构相同/可行的标 ○。
+> **2026-09-06 更新**：除 PE 融合（③）外，L_PJG **整机**的组件级替换已全部落地——因 `complex_multiplier` 之外的所有同名单元两库**字节级相同**，AFTER filelist 统一指向 `arithmetic_unit_full/` 即完成替换（bit-safe），整机 FC 复验 **0/32**（见 [整机综合对比准备计划.md](./整机综合对比准备计划.md)）。PE 级融合（G_PE ③ / G_PE_diag / MF_PE）也已在工作树应用并整机 FC 0/32 通过（Option B 语义）。
 
 | L_PJG 现有模块（compact 用法） | 使用的算术单元 | arithmetic_unit_full 替换方案 | 可行性 / 备注 |
 |---|---|---|---|
@@ -167,7 +168,7 @@ DC low-effort 功耗估算，输入无翻转率标注（PWR-414/415），**只�
 | **G_PE_diag.sv**（对角 PE） | `complex_multiplier`＋`complex_adder` | 同 G_PE（G_out[1] 不存储，只是把第二个输出寄存器省掉，不影响算术替换） | ○ 结构一致，同样适用；未单独综合 |
 | **MF_PE.sv**（匹配滤波 PE） | `complex_multiplier`（H_conj×y）＋`complex_adder` 归约树＋y_mf 累加 reg | 组件级：换 full `complex_multiplier`／`complex_adder`；融合级：归约+累加可考虑 `real_mac_w_bias`（对实部/虚部分别） | ○ 结构同 G_PE 模式（per-lane mul + adder 树 + 累加），适用性高；未综合 |
 | **A_systolic_array.sv**（阵列顶层） | 例化 G_PE/G_PE_diag ＋ `complex_conj`（H 共轭）＋`real_adder`＋控制 | PE 在子模块层被替换后自动继承；`complex_conj`/`real_adder` 两库**字节级相同**，无需改动 | ✅ 无需额外替换；最终收益≈PE 数×PE 节省 |
-| **LPJG_unit.sv**（迭代单元） | `complex_multiplier`、`complex_adder`、`complex_real_multiplier`、手写 `ADDER_TREE`（real_adder/complex_adder） | 组件级：换 full `complex_multiplier`／`complex_adder`／`complex_real_multiplier`；手写归约树 → `complex_adder_tree`／`real_adder_tree`（full 库新增）；迭代 MAC 通路 → `complex_mac`/`real_mac(_w_bias)` 融合 | ○ 可行；数据通路更长、替换收益与风险都更大，建议作为 G_PE 之后第二步 |
+| **LPJG_unit.sv**（迭代单元） | `complex_multiplier`、`complex_adder`、`complex_real_multiplier`、手写 `ADDER_TREE`（real_adder/complex_adder） | 组件级：换 full `complex_multiplier`／`complex_adder`／`complex_real_multiplier`；手写归约树 → `complex_adder_tree`／`real_adder_tree`（full 库新增）；迭代 MAC 通路 → `complex_mac`/`real_mac(_w_bias)` 融合 | **组件级 ✅ 已落地（2026-09-06）**：`complex_multiplier` 前轮已换 full；其余单元两库**字节级相同**，已随 AFTER filelist 统一指向 `arithmetic_unit_full/`（bit-safe），整机 FC 复验 0/32。**结构级**（`ADDER_TREE`/迭代 MAC 融合）○ 可行但风险大、收益小——累加路径已按 full 语义（全宽累加+单次截位）工作并与 golden 逐位一致，**不建议再融合** |
 | PI_buffer / SP_Ram_array | 非算术（存储） | 不在本次替换范围 | — |
 
 **full 库相对 compact 库的新增/可用模块**（见 [arithmetic_unit/](L_PJG/arithmetic_unit/)）：`complex_mac.sv`（含 `complex_mac_w_bias`、`complex_mac`）、`real_mac.sv`（含 `real_mac_w_bias`、`real_mac`）、`complex_adder_tree.sv`、`real_adder_tree.sv`；
