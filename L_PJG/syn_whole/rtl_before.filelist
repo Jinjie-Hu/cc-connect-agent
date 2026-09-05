@@ -1,10 +1,3 @@
-# File list for the functional (self-checking) L_PJG simulation.
-# Same as the RTL file list used by the power/coverage sims (sim_rtl.f) but
-# with the golden-checking testbench rtl/testbench_fc.sv in place of
-# rtl/testbench.sv. Paths are EDA-absolute (see makefile target "com-fc").
-# Usage (from the directory holding the makefile):
-#   make com-fc   # compile (top tb_fc_detector, TEST_ITER_NUM=16)
-#   make sim-fc   # compile + run -> prints "FC: PASS" / "FC: FAIL"
 +incdir+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/vinc
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/general/one_hot_code.sv
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/general/dfflr.sv
@@ -17,16 +10,11 @@
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_real_multiplier.sv
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/real_multiplier.sv
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_adder.sv
+/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_multiplier.sv
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/arithmetic_unit/complex_addsub.sv
-// fused full-precision arithmetic modules (arithmetic_unit_full), replace
-// per-stage truncation in G_PE/G_PE_diag/MF_PE accumulators and the
-// complex_multiplier cell used by LPJG_unit
-/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_mac.sv
-/home/asic03/graduate/proj_hujinjie/arithmetic_unit_full/complex_multiplier.sv
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/iter_unit/LPJG_unit.sv
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/iter_unit/PI_buffer.sv
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/detector.sv
-/home/asic03/graduate/proj_hujinjie/L_PJG/rtl/testbench_fc.sv
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/RAM/SP_Ram.v
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/RAM/SP_Ram_array.sv
 /home/asic03/graduate/proj_hujinjie/L_PJG/rtl/G_systolic_array/G_PE.sv

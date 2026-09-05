@@ -22,6 +22,25 @@ module complex_multiplier #(
 	localparam qtz_t IN_B_REAL_QTZ = get_qtz(INPUT_B_QTZ.sgn_w, INPUT_B_QTZ.int_w, INPUT_B_QTZ.fp_w, REAL);
 	localparam qtz_t OUT_REAL_QTZ  = get_qtz(OUTPUT_QTZ.sgn_w, OUTPUT_QTZ.int_w, OUTPUT_QTZ.fp_w, REAL);
 
+	// VCS2014 hoist: chained get_qtz localparams fail VCS2014 elaboration
+	// (Error-[NCE]) when declared inside generate branches, so the NORMAL_MODE
+	// quantizations are declared here at module scope. Semantics-preserving;
+	// FAST_MODE uses its own independent localparams below.
+	localparam qtz_t IN_A_REALPLUS_QTZ = get_qtz(INPUT_A_QTZ.sgn_w, INPUT_A_QTZ.int_w + 1, INPUT_A_QTZ.fp_w, REAL);
+	localparam qtz_t IN_B_REALPLUS_QTZ = get_qtz(INPUT_B_QTZ.sgn_w, INPUT_B_QTZ.int_w + 1, INPUT_B_QTZ.fp_w, REAL);
+
+	// Full signed quantization for each multiplier operand
+	// (following the same pattern as real_multiplier: force sgn_w=1, zero-extend)
+	localparam qtz_t AR_FULL_QTZ  = get_qtz(1, IN_A_REAL_QTZ.int_w,      IN_A_REAL_QTZ.fp_w,      REAL);
+	localparam qtz_t ARP_FULL_QTZ = get_qtz(1, IN_A_REALPLUS_QTZ.int_w, IN_A_REALPLUS_QTZ.fp_w, REAL);
+	localparam qtz_t BR_FULL_QTZ  = get_qtz(1, IN_B_REAL_QTZ.int_w,      IN_B_REAL_QTZ.fp_w,      REAL);
+	localparam qtz_t BRP_FULL_QTZ = get_qtz(1, IN_B_REALPLUS_QTZ.int_w, IN_B_REALPLUS_QTZ.fp_w, REAL);
+
+	// Product full quantization: HSB truncated to OUT_REAL_QTZ.int_w
+	localparam PROD_FP_W  = AR_FULL_QTZ.fp_w + BRP_FULL_QTZ.fp_w;  // = A.fp + B.fp
+	localparam PROD_INT_W = OUT_REAL_QTZ.int_w;
+	localparam qtz_t PROD_FULL_QTZ = get_qtz(1, PROD_INT_W, PROD_FP_W, REAL);
+
 	// Common input splitting
 	wire signed [IN_A_REAL_QTZ.width-1:0] InputA_r, InputA_i;
 	wire signed [IN_B_REAL_QTZ.width-1:0] InputB_r, InputB_i;
@@ -91,22 +110,6 @@ module complex_multiplier #(
 			// All multiplications are performed inline using direct
 			// * operator (no external multiplier instantiation).
 			// --------------------------------------------------------
-
-			// Quantization for pre-add results (need 1 extra integer bit)
-			localparam qtz_t IN_A_REALPLUS_QTZ = get_qtz(INPUT_A_QTZ.sgn_w, INPUT_A_QTZ.int_w + 1, INPUT_A_QTZ.fp_w, REAL);
-			localparam qtz_t IN_B_REALPLUS_QTZ = get_qtz(INPUT_B_QTZ.sgn_w, INPUT_B_QTZ.int_w + 1, INPUT_B_QTZ.fp_w, REAL);
-
-			// Full signed quantization for each multiplier operand
-			// (following the same pattern as real_multiplier: force sgn_w=1, zero-extend)
-			localparam qtz_t AR_FULL_QTZ  = get_qtz(1, IN_A_REAL_QTZ.int_w,      IN_A_REAL_QTZ.fp_w,      REAL);
-			localparam qtz_t ARP_FULL_QTZ = get_qtz(1, IN_A_REALPLUS_QTZ.int_w, IN_A_REALPLUS_QTZ.fp_w, REAL);
-			localparam qtz_t BR_FULL_QTZ  = get_qtz(1, IN_B_REAL_QTZ.int_w,      IN_B_REAL_QTZ.fp_w,      REAL);
-			localparam qtz_t BRP_FULL_QTZ = get_qtz(1, IN_B_REALPLUS_QTZ.int_w, IN_B_REALPLUS_QTZ.fp_w, REAL);
-
-			// Product full quantization: HSB truncated to OUT_REAL_QTZ.int_w
-			localparam PROD_FP_W  = AR_FULL_QTZ.fp_w + BRP_FULL_QTZ.fp_w;  // = A.fp + B.fp
-			localparam PROD_INT_W = OUT_REAL_QTZ.int_w;
-			localparam qtz_t PROD_FULL_QTZ = get_qtz(1, PROD_INT_W, PROD_FP_W, REAL);
 
 			// Pre-add/sub (carry needs 1 extra integer bit)
 			wire signed [IN_A_REALPLUS_QTZ.width-1:0] A_r_sub_i, A_r_add_i;

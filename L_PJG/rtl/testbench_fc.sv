@@ -145,6 +145,20 @@ module tb_fc_detector;
             end
         end
 
+`ifdef FC_DUMP_XO
+        // Optional full dump of got/exp for offline precision analysis
+        // (compile with -DFC_DUMP_XO -DFC_DUMP_FILE="<path>")
+        begin
+            integer fd;
+            fd = $fopen(`FC_DUMP_FILE, "w");
+            for (i = 0; i < TX; i = i + 1) begin
+                $fdisplay(fd, "tx[%0d] got=%h exp=%h", i, x_o[i],
+                          x_golden[i][0 +: X_QTZ.width]);
+            end
+            $fclose(fd);
+        end
+`endif
+
         if (mismatches == 0) begin
             $display("FC: PASS - x_o matches golden x_p8 for all %0d TX entries (iter=16 sweeps)", TX);
         end else begin
